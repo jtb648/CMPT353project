@@ -1,0 +1,59 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+<h1>Modify Menu</h1>
+
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectmenu", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Menu'<thead <tr><th> Item</th><th> Price</th>"
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].Item + "</td> <td>" + postdata[x].Price + "</td>";
+        }
+        table += "</table>";
+        document.getElementById("Menu").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+
+<body>
+    <p id="Menu"> </p>
+<form action="/modifymenu" method="post">
+    <ul>
+        <li>
+          <label for="modified_item"> Item to modify:</label>
+          <input type="text" id="modified_item" name="modified_item" placeholder = "Item or Price" >
+        </li>
+        <li>
+            <label for="modified_value" >Value to change:</label>
+            <input type="text" id="modified_value" name="modified_value" placeholder = "Tea or 2.25" >
+          </li>
+          <li>
+         <label for="update_value" >Value to update Item to:</label>
+         <input type="text" id="update_value" name="update_value" placeholder="Espresso or 3.50">
+          </li>
+
+        <button onclick="http.send()"> Modify Menu </button><br>
+      
+</form>
+<h3>
+<a href="/createmenu.html"> Add items to menu </a></a>
+</h3>
+<h3>
+<a href="/seeorders.html"> See orders</a></a>
+</h3>
+</body>
+
+</html>

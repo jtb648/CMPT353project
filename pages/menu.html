@@ -1,0 +1,82 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+<h1>Add/Modify/Delete items to the Menu</h1>
+
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectmenu", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Menu'<thead <tr><th> Item</th><th> Price</th>"
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].Item + "</td> <td>" + postdata[x].Price + "</td> ";
+        }
+        table += "</table>";
+        document.getElementById("Menu").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+
+<body>
+    <h3>Menu</h3>
+    <p id="Menu"> </p>
+
+<h4>Add Items to Menu</h4>
+<form action="/insertmenu" method="post">
+    
+    <li>
+    <label for="item"> Item to modify:</label>
+    <input type="text" id="item" name="item" placeholder = "Espresso" >
+    </li>
+    <li>
+    <label for="price" >Value to change:</label>
+    <input type="text" id="price" name="price" placeholder = "2.25" >
+    </li>
+
+    <button onclick="http.send()"> ADD ITEMS TO MENU </button><br>
+      
+</form>
+<h4>Modify Items in Menu</h4>
+<form action="/modifymenu" method="post">        
+        <li>
+          <label for="modified_item"> Item to modify:</label>
+          <input type="text" id="modified_item" name="modified_item" placeholder = "Espresso" >
+        </li>
+        <li>
+            <label for="update_item" >Value to change Item to:</label>
+            <input type="text" id="update_item" name="update_item" placeholder = "Tea" >
+          </li>
+          <li>
+         <label for="update_price" >Value to change Price to:</label>
+         <input type="text" id="update_price" name="update_price" placeholder="3.50">
+          </li>
+
+        <button onclick="http.send()"> MODIFY MENU </button><br>
+      
+</form>
+<h4>Delete Items from Menu</h4>
+<form action="/deleteitem" method="post">
+        <li>
+        <label for="Item"> Item to delete from Menu:</label>
+        <input type="text" id="Item" name="Item"  placeholder ="Espresso">
+        </li>
+
+        <button onclick="http.send()"> DELETE ITEM FROM MENU</button><br>
+</form>
+<h4><a href="/seeorders.html"> Go to orders</a></a></h4>
+<h4>
+<a href="/employeelanding.html"> Go back to employee main page</a></a></h4>
+</body>
+
+</html>

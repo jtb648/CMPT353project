@@ -1,0 +1,71 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+
+    <h1>Menu</h1>
+    <h2> </h2>
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectmenu", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Menu'<thead <tr><th> Item</th><th> Price</th>"
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].Item + "</td> <td>" + postdata[x].Price + "</td> ";
+        }
+        table += "</table>";
+        document.getElementById("Menu").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+<body>
+<p id="Menu"></p>
+<h3>Your order</h3>
+<form action="/insertorder" method="post">
+    <ul>
+        <li>
+        <label for="name"> Name:</label>
+        <input type="text" id="name" name="name" placeholder="John Smith" >
+        </li>
+        <li>
+        <label for="card" >Credit CardNumber:</label>
+        <input type="text" id="card" name="card" placeholder="1111-2222-3333-4444">
+    </li>
+        <li>
+        <label for="items">Enter your order:</label>
+        <input type="text" id="items" name="items" placeholder="2 espresso 1 coffee">
+        </li>
+        
+    </ul>
+
+
+        <input type="submit" value="ORDER">
+        <h1></h1>
+        <h1></h1>
+    </form>
+
+<h4></h4>
+<form action="/cancelorder" method="post">
+    <label for="card" >Cancel Order (give Credit Card Number):</label>
+    <input type="text" id="card" name="card" placeholder="1111-2222-3333-4444">
+    <h3></h3>
+    <button onclick="http.send()"> CANCEL ORDER</button><br>
+</form>
+<h4>
+<a href="checkready.html"> Check if your order is ready!</a></h4>  
+<h4>
+<a href="/landing.html"> Go back</a></a></h4>
+
+</body>
+
+</html>

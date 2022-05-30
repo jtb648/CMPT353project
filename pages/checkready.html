@@ -1,0 +1,35 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+<h1>Is your order Ready?</h1>
+
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectready", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Order'<thead <tr><th> Name</th><th> Card</th><th> Items</th><th> Timestamp</th><th> Ready</th>";
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].name + "</td> <td>" + postdata[x].card + "</td> <td>"+ postdata[x].items+ "</td><td>"
+                + postdata[x].timestamp + "</td><td>" + postdata[x].ready + "</td> ";
+        }
+        table += "</table>";
+        document.getElementById("Order").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+<p id='Order'></p>
+<h4><a href="createorder.html"> Go back to Order screen</a></h4>
+</body>
+
+</html>

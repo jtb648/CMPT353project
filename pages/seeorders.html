@@ -1,0 +1,46 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+<h1>Orders to complete</h1>
+
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectorders", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Orders'<thead <tr><th> Name</th><th> Card</th><th> Items</th><th> Timestamp</th><th> Ready</th>";
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].name + "</td> <td>" + postdata[x].card + "</td> <td>"+ postdata[x].items + "</td><td>"
+                + postdata[x].timestamp + "</td><td>" + postdata[x].ready + "</td> ";
+        }
+        table += "</table>";
+        document.getElementById("Orders").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+
+<body>
+    <p id="Orders"> </p>
+<form action="/readyorder" method="post">
+
+    <button onclick="http.send()"> READY TOP ORDER</button><br>
+</form>
+<form action="/deleteorder" method="post">
+
+    <button onclick="http.send()"> DELETE COMPLETED ORDER</button><br>
+</form>
+<h4>
+<a href="/employeelanding.html"> Go to employee main page</a></a></h4>
+</body>
+
+</html>

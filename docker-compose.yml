@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+ node1: 
+  build: .
+  depends_on:
+   - mongodb1
+  container_name: s4
+  ports:
+   - "80:8080"
+  volumes:
+   - /home/jtb648/node/node.js/test/s2:/usr/src/app
+
+ mongodb1:
+  image: mongo:latest
+  container_name: db4
+  environment:
+   MONGO_INTIDB_ROOT_PASSWORD: admin
+   MONGO_INITDB_DATABASE: project

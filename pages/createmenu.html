@@ -1,0 +1,39 @@
+<!--Joel Berryere jtb648 11205074-->
+
+<!DOCTYPE html>
+
+<html>
+
+
+<h1>Create Menu</h1>
+
+<script type= "text/javascript">
+
+    http = new XMLHttpRequest();
+    http.open('GET',  "http://localhost/selectmenu", true);
+
+    http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+    setTimeout(http.send(),3000);
+    http.onreadystatechange = function() {
+    if(http.readyState == 4 && http.status == 200 ){
+        var postdata = JSON.parse(http.responseText);
+        var table = "<table border='1' id= 'Menu'<thead <tr><th> Item</th><th> Price</th>"
+        for (x in postdata){
+            table += "<tr> <td> " + postdata[x].Item + "</td> <td>" + postdata[x].Price + "</td> <td>";
+        }
+        table += "</table>";
+        document.getElementById("Menu").innerHTML = table;
+        //alert("successfully posted!");
+    };
+    };
+</script>
+
+<body>
+    <p id="Menu"> </p>
+<form action="/createmenu" method="post">
+    <button onclick="http.send()"> Create Menu </button><br>
+      
+</form>
+</body>
+
+</html>
